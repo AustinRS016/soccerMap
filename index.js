@@ -40,4 +40,4 @@ map.on('mouseleave', 'bundesliga', (e) => {
 });
 map.on('click', 'bundesliga', function(e){
   window.open('https://www.lemonparty.org', '_blank').focus();
-})
+});
