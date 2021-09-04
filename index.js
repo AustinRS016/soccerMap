@@ -39,5 +39,5 @@ map.on('mouseleave', 'bundesliga', (e) => {
   map.getCanvas().style.cursor = ''
 });
 map.on('click', 'bundesliga', function(e){
-  window.open('https://docs.mapbox.com/mapbox-gl-js/example/', '_blank').focus();
+  window.open('https://www.lemonparty.org', '_blank').focus();
 })
