@@ -20,6 +20,9 @@ x = map.addSource('bundesliga',{
      "id":"bundesliga",
      "type":"circle",
      "source":"bundesliga",
+     "layout": {
+       'visibility':'none'
+     },
      "paint": {
       'circle-color': 'red',
       'circle-radius': 10
