@@ -43,8 +43,8 @@ d3.json("jsons/bundesliga.geojson", function(json) {
     el.classname = 'marker';
 
     el.style.backgroundImage = 'url(Logos/' + data[i].properties.Club.replace(" ","_") + '.png)'
-    el.style.width = '40px'
-    el.style.height = '40px'
+    el.style.width = '80px'
+    el.style.height = '80px'
     el.style.backgroundSize = '100%'
     new mapboxgl.Marker(el)
       .setLngLat(data[i].geometry.coordinates)
