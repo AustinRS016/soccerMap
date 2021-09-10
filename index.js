@@ -12,51 +12,55 @@ var map = new mapboxgl.Map({
 map.on('load', function(){
 
 
-x = map.addSource('bundesliga',{
+map.addSource('bundesliga',{
        "type": "geojson",
        "data": "jsons/bundesliga.geojson"
    });
-  map.addLayer({
-     "id":"bundesliga",
-     "type":"circle",
-     "source":"bundesliga",
-     "layout": {
-       'visibility':'none'
-     },
-     "paint": {
-      'circle-color': 'red',
-      'circle-radius': 10
 
+for (image in './Logos') {
+  console.log(image)
+}
+  // map.addLayer({
+  //    "id":"bundesliga",
+  //    "type":"circle",
+  //    "source":"bundesliga",
+  //    "layout": {
+  //      'visibility':'none'
+  //    },
+  //    "paint": {
+  //     'circle-color': 'red',
+  //     'circle-radius': 10
+  //
+  //
+  //   },
+  //
+  //  });
 
-    },
-
-   });
-
-d3.json("jsons/bundesliga.geojson", function(json) {
-
-  // console.log(json.length)
-  var data = json.features
-  console.log(data)
-
-  for (let i = 0; i < data.length; i++) {
-    const el = document.createElement('div');
-    el.classname = 'marker';
-
-    el.style.backgroundImage = 'url(Logos/' + data[i].properties.Club.replace(" ","_") + '.png)'
-    el.style.width = '80px'
-    el.style.height = '80px'
-    el.style.backgroundSize = '100%'
-    new mapboxgl.Marker(el)
-      .setLngLat(data[i].geometry.coordinates)
-      .addTo(map);
-    // console.log(data[i].properties.Club.replace(" ","_"))
-    // console.log(data[i].geometry.coordinates[0])
-    // console.log(data[i].geometry.coordinates[1])
-
-  }
-
-
-})
+// d3.json("jsons/bundesliga.geojson", function(json) {
+//
+//   // console.log(json.length)
+//   var data = json.features
+//   console.log(data)
+//
+//   for (let i = 0; i < data.length; i++) {
+//     const el = document.createElement('div');
+//     el.classname = 'marker';
+//
+//     el.style.backgroundImage = 'url(Logos/' + data[i].properties.Club.replace(" ","_") + '.png)'
+//     el.style.width = '80px'
+//     el.style.height = '80px'
+//     el.style.backgroundSize = '100%'
+//     new mapboxgl.Marker(el)
+//       .setLngLat(data[i].geometry.coordinates)
+//       .addTo(map);
+//     // console.log(data[i].properties.Club.replace(" ","_"))
+//     // console.log(data[i].geometry.coordinates[0])
+//     // console.log(data[i].geometry.coordinates[1])
+//
+//   }
+//
+//
+// })
 
 map.on('mousemove', 'bundesliga', (e) => {
   map.getCanvas().style.cursor = 'pointer';
