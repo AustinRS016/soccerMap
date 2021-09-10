@@ -22,8 +22,9 @@ d3.json("https://raw.githubusercontent.com/AustinRS016/soccerMap/master/Clubs.js
   console.log(json)
 
   l = json.length
-
-
+  for (i=0; i<l; i++){
+    console.log(json[i])
+  }
 
 })
   // map.addLayer({
@@ -42,33 +43,33 @@ d3.json("https://raw.githubusercontent.com/AustinRS016/soccerMap/master/Clubs.js
   //
   //  });
 
-d3.json("jsons/bundesliga.geojson", function(json) {
-
-  // console.log(json.length)
-  var data = json.features
-  console.log(data)
-
-  for (let i = 0; i < data.length; i++) {
-    const el = document.createElement('div');
-    el.classname = 'marker';
-
-    el.style.backgroundImage = 'url(Logos/' + data[i].properties.Club.replace(" ","_") + '.png)'
-    el.style.width= '80px'
-    el.style.height= '80px'
-    // el.style.width = 'auto'
-    // el.style.height = 'auto'
-    el.style.backgroundSize = '100%'
-    new mapboxgl.Marker(el)
-      .setLngLat(data[i].geometry.coordinates)
-      .addTo(map);
-    // console.log(data[i].properties.Club.replace(" ","_"))
-    // console.log(data[i].geometry.coordinates[0])
-    // console.log(data[i].geometry.coordinates[1])
-
-  }
-
-
-})
+// d3.json("jsons/bundesliga.geojson", function(json) {
+//
+//   // console.log(json.length)
+//   var data = json.features
+//   console.log(data)
+//
+//   for (let i = 0; i < data.length; i++) {
+//     const el = document.createElement('div');
+//     el.classname = 'marker';
+//
+//     el.style.backgroundImage = 'url(Logos/' + data[i].properties.Club.replace(" ","_") + '.png)'
+//     el.style.width= '80px'
+//     el.style.height= '80px'
+//     // el.style.width = 'auto'
+//     // el.style.height = 'auto'
+//     el.style.backgroundSize = '100%'
+//     new mapboxgl.Marker(el)
+//       .setLngLat(data[i].geometry.coordinates)
+//       .addTo(map);
+//     // console.log(data[i].properties.Club.replace(" ","_"))
+//     // console.log(data[i].geometry.coordinates[0])
+//     // console.log(data[i].geometry.coordinates[1])
+//
+//   }
+//
+//
+// })
 
 map.on('mousemove', 'bundesliga', (e) => {
   map.getCanvas().style.cursor = 'pointer';
