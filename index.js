@@ -17,9 +17,15 @@ map.addSource('bundesliga',{
        "data": "jsons/bundesliga.geojson"
    });
 
-for (image in './Logos') {
-  console.log(image)
-}
+
+d3.json("https://raw.githubusercontent.com/AustinRS016/soccerMap/master/Clubs.json", function(json) {
+  console.log(json)
+
+  l = json.length
+
+
+
+})
   // map.addLayer({
   //    "id":"bundesliga",
   //    "type":"circle",
@@ -36,31 +42,33 @@ for (image in './Logos') {
   //
   //  });
 
-// d3.json("jsons/bundesliga.geojson", function(json) {
-//
-//   // console.log(json.length)
-//   var data = json.features
-//   console.log(data)
-//
-//   for (let i = 0; i < data.length; i++) {
-//     const el = document.createElement('div');
-//     el.classname = 'marker';
-//
-//     el.style.backgroundImage = 'url(Logos/' + data[i].properties.Club.replace(" ","_") + '.png)'
-//     el.style.width = '80px'
-//     el.style.height = '80px'
-//     el.style.backgroundSize = '100%'
-//     new mapboxgl.Marker(el)
-//       .setLngLat(data[i].geometry.coordinates)
-//       .addTo(map);
-//     // console.log(data[i].properties.Club.replace(" ","_"))
-//     // console.log(data[i].geometry.coordinates[0])
-//     // console.log(data[i].geometry.coordinates[1])
-//
-//   }
-//
-//
-// })
+d3.json("jsons/bundesliga.geojson", function(json) {
+
+  // console.log(json.length)
+  var data = json.features
+  console.log(data)
+
+  for (let i = 0; i < data.length; i++) {
+    const el = document.createElement('div');
+    el.classname = 'marker';
+
+    el.style.backgroundImage = 'url(Logos/' + data[i].properties.Club.replace(" ","_") + '.png)'
+    el.style.width= '80px'
+    el.style.height= '80px'
+    // el.style.width = 'auto'
+    // el.style.height = 'auto'
+    el.style.backgroundSize = '100%'
+    new mapboxgl.Marker(el)
+      .setLngLat(data[i].geometry.coordinates)
+      .addTo(map);
+    // console.log(data[i].properties.Club.replace(" ","_"))
+    // console.log(data[i].geometry.coordinates[0])
+    // console.log(data[i].geometry.coordinates[1])
+
+  }
+
+
+})
 
 map.on('mousemove', 'bundesliga', (e) => {
   map.getCanvas().style.cursor = 'pointer';

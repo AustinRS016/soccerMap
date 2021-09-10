@@ -29,4 +29,9 @@ html {
   border: none;
   cursor: pointer;
   padding: 0;
+  max-width: 80px;
+  max-height: 80px;
+  width: auto;
+  height: auto;
+
 }
