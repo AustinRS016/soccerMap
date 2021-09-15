@@ -34,6 +34,22 @@ d3.json("https://raw.githubusercontent.com/AustinRS016/soccerMap/master/Clubs.js
       if (error) throw error;
       map.addImage('custom-maker', image);
 
+      map.addSource('bundes',{
+             "type": "geojson",
+             "data": "jsons/bundesliga.geojson"
+         });
+
+     map.addLayer({
+       "id":"bundes",
+        "type":"symbol",
+        "source":"bundes",
+        "layout": {
+          'icon-image': 'custom-marker',
+          'text-field': [],
+          'text-font': []
+            },
+        });
+
     }
   )
 
