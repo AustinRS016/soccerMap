@@ -19,12 +19,27 @@ map.addSource('bundesliga',{
 
 
 d3.json("https://raw.githubusercontent.com/AustinRS016/soccerMap/master/Clubs.json", function(json) {
-  console.log(json)
+  console.log(json['Club'])
 
-  l = json.length
-  for (i=0; i<l; i++){
-    console.log(json[i])
+  var l = json['Club'].length
+
+  console.log(l)
+  for (i = 0; i < l; i++ ){
+    console.log(json['Club'][i])
   }
+  var bayern = json['Club'][9]
+  map.loadImage(
+    'https://github.com/AustinRS016/soccerMap/blob/master/Logos/' + bayern + '?raw=true',
+    (error, image) => {
+      if (error) throw error;
+      map.addImage('custom-maker', image);
+
+    }
+  )
+
+  console.log(bayern)
+
+
 
 })
   // map.addLayer({
