@@ -12,32 +12,42 @@ var map = new mapboxgl.Map({
 
 
 
-d3.json("https://raw.githubusercontent.com/AustinRS016/soccerMap/master/Clubs.json", function(json) {
-  // console.log(json['Club'])
 
-  var l = json['Club'].length
 
-  console.log(l)
 
-  for (i = 0; i < l; i++ ){
-      console.log(json['Club'][i])
 
-      var team = json['Club'][9]
-      var teamName = json['Club'][i].replace(/_/g, ' ')
-      teamName = teamName.substring(0, teamName.length -4);
-      console.log(teamName)
+  // for (i = 0; i < l; i++ ){
+  //     console.log(json['Club'][i])
+  //
+  //     var team = json['Club'][9]
+  //     var teamName = json['Club'][i].replace(/_/g, ' ')
+  //     teamName = teamName.substring(0, teamName.length -4);
+  //     console.log(teamName)
 
       map.on('load', function(){
 
-      map.addSource('bundesliga',{
-             "type": "geojson",
-             "data": "jsons/bundesliga.geojson"
-         });
+        d3.json("https://raw.githubusercontent.com/AustinRS016/soccerMap/master/Clubs.json", function(json) {
+          // console.log(json['Club'])
+
+        var l = json['Club'].length
+
+        for (i = 0; i < l; i++ ){
+            console.log(json['Club'][i])
+
+            var team = json['Club'][9]
+            var teamName = json['Club'][i].replace(/_/g, ' ')
+            teamName = teamName.substring(0, teamName.length -4);
+            console.log(teamName)
+
+      // map.addSource('bundesliga',{
+      //        "type": "geojson",
+      //        "data": "jsons/bundesliga.geojson"
+      //    });
 
       map.loadImage('https://raw.githubusercontent.com/AustinRS016/soccerMap/master/Logos/' + team, (error, image) => {
           if (error) throw error;
-
-        map.addImage('custom', image);
+          console.log(teamName)
+        map.addImage(teamName, image);
 
 
 
@@ -49,19 +59,19 @@ d3.json("https://raw.githubusercontent.com/AustinRS016/soccerMap/master/Clubs.js
          map.addLayer({
            "id":team,
             "type":"symbol",
-            "source":team,
+            "source":teamName,
             "layout": {
               'icon-image': 'custom',
               'icon-size': 0.01,
                 },
-            "filter": ['==', 'icon', teamName]
+            "filter": ['==', 'Club', teamName]
             });
 
       });
 
       console.log(team)
-})
 }
+})
   // map.addLayer({
   //    "id":"bundesliga",
   //    "type":"circle",
