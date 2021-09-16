@@ -9,121 +9,97 @@ var map = new mapboxgl.Map({
 });
 
 
+function addImages(team, teamName){
+  map.loadImage('https://raw.githubusercontent.com/AustinRS016/soccerMap/master/Logos/' + team, (error, image) => {
+    if (error) throw error;
+    console.log(image)
+    map.addImage(teamName, image);
+    map.addSource(team,{
+             "type": "geojson",
+             "data": "jsons/bundesliga.geojson"
+         });
+    map.addLayer({
+       "id":team,
+        "type":"symbol",
+        "source":team,
+        "layout": {
+          'icon-image': teamName,
+          'icon-size': 0.01,
+            },
+        "filter": ['==', 'Club', teamName]
+        });
+});
+}
 
 
+map.on('load', function(){
 
+d3.json("https://raw.githubusercontent.com/AustinRS016/soccerMap/master/Clubs.json", function(json) {
 
+var l = json['Club'].length
+var i = 0;
 
-
-
-  // for (i = 0; i < l; i++ ){
-  //     console.log(json['Club'][i])
-  //
-  //     var team = json['Club'][9]
-  //     var teamName = json['Club'][i].replace(/_/g, ' ')
-  //     teamName = teamName.substring(0, teamName.length -4);
-  //     console.log(teamName)
-
-      map.on('load', function(){
-
-        d3.json("https://raw.githubusercontent.com/AustinRS016/soccerMap/master/Clubs.json", function(json) {
-          // console.log(json['Club'])
-
-        var l = json['Club'].length
-
-        for (i = 0; i < l; i++ ){
-            console.log(json['Club'][i])
-
-            var team = json['Club'][9]
-            var teamName = json['Club'][i].replace(/_/g, ' ')
-            teamName = teamName.substring(0, teamName.length -4);
-            console.log(teamName)
-
-      // map.addSource('bundesliga',{
-      //        "type": "geojson",
-      //        "data": "jsons/bundesliga.geojson"
-      //    });
-
-      map.loadImage('https://raw.githubusercontent.com/AustinRS016/soccerMap/master/Logos/' + team, (error, image) => {
-          if (error) throw error;
-          console.log(teamName)
-        map.addImage(teamName, image);
-
-
-
-        map.addSource(team,{
-                 "type": "geojson",
-                 "data": "jsons/bundesliga.geojson"
-             });
-
-         map.addLayer({
-           "id":team,
-            "type":"symbol",
-            "source":teamName,
-            "layout": {
-              'icon-image': 'custom',
-              'icon-size': 0.01,
-                },
-            "filter": ['==', 'Club', teamName]
-            });
-
-      });
-
-      console.log(team)
+for (i = 0; i < l; i++ ){
+  var team = json['Club'][i]
+  // console.log(team)
+  var teamName = team.replace(/_/g, ' ')
+  teamName = teamName.substring(0, teamName.length -4);
+  var img = teamName + 'Img'
+  // console.log(teamName)
+  addImages(team,teamName)
 }
 })
-  // map.addLayer({
-  //    "id":"bundesliga",
-  //    "type":"circle",
-  //    "source":"bundesliga",
-  //    "layout": {
-  //      'visibility':'none'
-  //    },
-  //    "paint": {
-  //     'circle-color': 'red',
-  //     'circle-radius': 10
-  //
-  //
-  //   },
-  //
-  //  });
+})
 
-// d3.json("jsons/bundesliga.geojson", function(json) {
-//
-//   // console.log(json.length)
-//   var data = json.features
-//   console.log(data)
-//
-//   for (let i = 0; i < data.length; i++) {
-//     const el = document.createElement('div');
-//     el.classname = 'marker';
-//
-//     el.style.backgroundImage = 'url(Logos/' + data[i].properties.Club.replace(" ","_") + '.png)'
-//     el.style.width= '80px'
-//     el.style.height= '80px'
-//     // el.style.width = 'auto'
-//     // el.style.height = 'auto'
-//     el.style.backgroundSize = '100%'
-//     new mapboxgl.Marker(el)
-//       .setLngLat(data[i].geometry.coordinates)
-//       .addTo(map);
-//     // console.log(data[i].properties.Club.replace(" ","_"))
-//     // console.log(data[i].geometry.coordinates[0])
-//     // console.log(data[i].geometry.coordinates[1])
-//
-//   }
-//
-//
-// })
 
-map.on('mousemove', 'bundesliga', (e) => {
-  map.getCanvas().style.cursor = 'pointer';
-});
-map.on('mouseleave', 'bundesliga', (e) => {
-  map.getCanvas().style.cursor = ''
-});
-map.on('click', 'bundesliga', function(e){
-  window.open('https://www.lemonparty.org', '_blank').focus();
-});
 
-    });
+// map.on('load', function(){
+//
+//       d3.json("https://raw.githubusercontent.com/AustinRS016/soccerMap/master/Clubs.json", function(json) {
+//
+//       var l = json['Club'].length
+//       var i = 0;
+//
+//         for (i = 0; i < l; i++ ){
+//           var team = json['Club'][i]
+//           console.log(team)
+//           var teamName = team.replace(/_/g, ' ')
+//           teamName = teamName.substring(0, teamName.length -4);
+//           var img = teamName + 'Img'
+//           console.log(teamName)
+//
+//           map.loadImage('https://raw.githubusercontent.com/AustinRS016/soccerMap/master/Logos/' + team, (error, image) => {
+//               if (error) throw error;
+//               console.log(image)
+//               map.addImage(teamName, image);
+//               map.addSource(team,{
+//                        "type": "geojson",
+//                        "data": "jsons/bundesliga.geojson"
+//                    });
+//               map.addLayer({
+//                  "id":team,
+//                   "type":"symbol",
+//                   "source":teamName,
+//                   "layout": {
+//                     'icon-image': 'custom',
+//                     'icon-size': 0.01,
+//                       },
+//                   "filter": ['==', 'Club', teamName]
+//                   });
+//
+//           });
+//         }
+//       })
+//
+//
+// map.on('mousemove', 'bundesliga', (e) => {
+//   map.getCanvas().style.cursor = 'pointer';
+// });
+// map.on('mouseleave', 'bundesliga', (e) => {
+//   map.getCanvas().style.cursor = ''
+// });
+// map.on('click', 'bundesliga', function(e){
+//   window.open('https://www.lemonparty.org', '_blank').focus();
+// });
+//
+//     });
