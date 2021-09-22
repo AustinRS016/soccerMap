@@ -3,7 +3,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYXVzdGlucnMxNiIsImEiOiJja2hjcjAyYWwwMTIyMnVsN
 
 var map = new mapboxgl.Map({
   container: 'map', // HTML container id
-  style: 'mapbox://styles/mapbox/streets-v11', // style URL
+  style: 'mapbox://styles/mapbox/dark-v10', // style URL
   center: [0, 0], // starting position as [lng, lat]
   zoom: 2, // starting zoom
 });
@@ -24,10 +24,46 @@ function addImages(team, teamName){
         "source":team,
         "layout": {
           'icon-image': teamName,
-          'icon-size': 0.01,
+          'icon-size': 0.04,
             },
         "filter": ['==', 'Club', teamName]
         });
+
+    //******************************************************//
+    //            Clicking and Activating Popups
+    //******************************************************//
+    map.on('click', team, (e) => {
+        const logo = "<p><img src='signs/" + team + "' alt='"+ teamName + " Logo' style='width:220px;'></p>"
+        const coordinates = e.features[0].geometry.coordinates.slice();
+        // const coordinates = e.features[0].geometry.coordinates[0][0].slice(); // for checking the point alignment
+        const club = e.features[0].properties.Club;
+        const player = e.features[0].properties.Player;
+        const number = e.features[0].properties.Number;
+        const position = e.features[0].properties.Position;
+        const teamnation = e.features[0].properties.National_Team;
+        const birthnation = e.features[0].properties.Birthplace;
+
+        console.log(coordinates); //Checking Coordinates On Click
+
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        new mapboxgl.Popup()
+          .setLngLat(coordinates)
+          .setHTML(logo+club+player+number+position+teamnation+birthnation)
+          .addTo(map);
+        });
+
+      map.on('mouseenter', team, () => {
+          map.getCanvas().style.cursor = 'pointer';
+        });
+
+      map.on('mouseleave', team, () => {
+          map.getCanvas().style.cursor = '';
+        });
+    //******************************************************//
+
     });
   }
 
@@ -46,15 +82,3 @@ map.on('load', function(){
         }
       })
     })
-
-
-
-// map.on('mousemove', 'bundesliga', (e) => {
-//   map.getCanvas().style.cursor = 'pointer';
-// });
-// map.on('mouseleave', 'bundesliga', (e) => {
-//   map.getCanvas().style.cursor = ''
-// });
-// map.on('click', 'bundesliga', function(e){
-//   window.open('https://www.lemonparty.org', '_blank').focus();
-// });
