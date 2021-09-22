@@ -40,7 +40,7 @@ function addImages(team, teamName){
         const player = e.features[0].properties.Player;
         const number = e.features[0].properties.Number;
         const position = e.features[0].properties.Position;
-        const teamnation = e.features[0].properties.National_Team;
+        const teamnation = e.features[0].properties['National Team'];
         const birthnation = e.features[0].properties.Birthplace;
 
         console.log(coordinates); //Checking Coordinates On Click
@@ -51,7 +51,7 @@ function addImages(team, teamName){
 
         new mapboxgl.Popup()
           .setLngLat(coordinates)
-          .setHTML(logo+club+player+number+position+teamnation+birthnation)
+          .setHTML((logo+teamName+"<br><br><strong>" + player + "</strong>"+ " #" + number + "<br><br>Position: " + position + "<p>National Team: " + teamnation + "</p>Birth Place: " + birthnation))
           .addTo(map);
         });
 
@@ -82,3 +82,5 @@ map.on('load', function(){
         }
       })
     })
+
+// (logo+team+"<br><br><strong>" + player + "</strong>"+ "<br>" + number + position + "<p>National Team: " + teamnation + "</p>Birth Place: " + birthnation)
