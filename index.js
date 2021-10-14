@@ -51,7 +51,13 @@ function addImages(team, teamName){
 
         new mapboxgl.Popup()
           .setLngLat(coordinates)
-          .setHTML((logo+teamName+"<br><br><strong>" + player + "</strong>"+ " #" + number + "<br><br>Position: " + position + "<p>National Team: " + teamnation + "</p>Birth Place: " + birthnation))
+          .setHTML((logo+
+            teamName+
+            "<br><br><strong>" + player + "</strong>"+
+            " #" + number +
+            "<br><br>Position: " + position +
+            "<p>National Team: " + teamnation +
+            "</p>Birth Place: " + birthnation))
           .addTo(map);
         });
 
