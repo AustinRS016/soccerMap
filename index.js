@@ -3,7 +3,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYXVzdGlucnMxNiIsImEiOiJja2hjcjAyYWwwMTIyMnVsN
 
 var map = new mapboxgl.Map({
   container: 'map', // HTML container id
-  style: 'mapbox://styles/mapbox/dark-v10', // style URL
+  style: 'mapbox://styles/mapbox/dark-v10?optimize=true', // style URL
   center: [0, 0], // starting position as [lng, lat]
   zoom: 2, // starting zoom
 
@@ -31,13 +31,13 @@ function addImages(team, teamName){
             'step',
             ['zoom'],
             .1, //Default to this size
-            9, //At this zoom decrease to...
-            .08, //This size
-            10, //At this zoom decrease to...
+            9, //At this zoom change to...
+            .09, //This size
+            10, //At this zoom change to...
             .09 //This size
           ],
           // 'icon-allow-overlap': true,
-          'icon-ignore-placement': true,
+          // 'icon-ignore-placement': true,
             },
         filter: ['==', 'Club', teamName],
       },
