@@ -6,28 +6,35 @@ var map = new mapboxgl.Map({
   style: 'mapbox://styles/mapbox/dark-v10', // style URL
   center: [0, 0], // starting position as [lng, lat]
   zoom: 2, // starting zoom
+
 });
 
-//** team = "team_Name.png" | teamName = "team Name" **\\
+//** team = "team_Name.png" (Hertha_BSC.png) | teamName = "team Name" (Hertha BSC) **\\
 function addImages(team, teamName){
   map.loadImage('https://raw.githubusercontent.com/AustinRS016/soccerMap/master/signs/' + team, (error, image) => {
     if (error) throw error;
     console.log(image)
     map.addImage(teamName, image);
     map.addSource(team,{
-             "type": "geojson",
-             "data": "jsons/bundesliga.geojson"
+             type: "geojson",
+             data: "jsons/bundesliga.geojson",
+
          });
     map.addLayer({
-       "id":team,
-        "type":"symbol",
-        "source":team,
-        "layout": {
+       id: team, /* Unclustered Points*/
+        type: "symbol",
+        source: team,
+        layout: {
           'icon-image': teamName,
           'icon-size': 0.04,
+          'icon-allow-overlap': true,
+          'icon-ignore-placement': true,
             },
-        "filter": ['==', 'Club', teamName]
-        });
+        filter: ['==', 'Club', teamName],
+      },
+    "cluster"
+  );
+
 
     //******************************************************//
     //            Clicking and Activating Popups
@@ -74,6 +81,51 @@ function addImages(team, teamName){
   }
 
 map.on('load', function(){
+  // Clustered Points //
+  map.addSource("bundesliga",{
+           type: "geojson",
+           data: "jsons/bundesliga.geojson",
+           cluster: true,
+           clusterMaxZoom: 7,
+           clusterRadius: 10
+           });
+  map.addLayer({
+     id: "cluster",
+      type: "circle",
+      source: "bundesliga",
+      filter: ['has', 'point_count'],
+      paint: {
+        'circle-blur': 1,
+        'circle-color': 'red',
+            'circle-radius': [
+              'step',
+              ['get', 'point_count'],
+              30,
+              4,
+              40,
+              12,
+              50
+            ]
+      }
+
+      });
+  map.addLayer({
+         id: "clusterCount",
+          type: "symbol",
+          source: "bundesliga",
+          layout: {
+            'text-field': '{point_count_abbreviated}',
+            'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+            'text-size': 12,
+              },
+          paint: {
+            'text-halo-color': 'red',
+            'text-color': 'white',
+            'text-halo-width': 1,
+          },
+          filter: ['has','point_count']
+          });
+  // -----------------//
     d3.json("https://raw.githubusercontent.com/AustinRS016/soccerMap/master/Clubs.json", function(json) {
     var l = json['Club'].length
     var i = 0;
@@ -87,6 +139,8 @@ map.on('load', function(){
         addImages(team,teamName)
         }
       })
+
+
     })
 
 // (logo+team+"<br><br><strong>" + player + "</strong>"+ "<br>" + number + position + "<p>National Team: " + teamnation + "</p>Birth Place: " + birthnation)
