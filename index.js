@@ -26,18 +26,18 @@ function addImages(team, teamName){
         source: team,
         layout: {
           'icon-image': teamName,
-          // 'icon-size': 0.04,
-          'icon-size': [
-            'step',
-            ['zoom'],
-            .1, //Default to this size
-            9, //At this zoom change to...
-            .09, //This size
-            10, //At this zoom change to...
-            .09 //This size
-          ],
+          'icon-size': .1,
+          // 'icon-size': [
+          //   'step',
+          //   ['zoom'],
+          //   .1, //Default to this size
+          //   9, //At this zoom change to...
+          //   .09, //This size
+          //   10, //At this zoom change to...
+          //   .09 //This size
+          // ],
           // 'icon-allow-overlap': true,
-          // 'icon-ignore-placement': true,
+          'icon-ignore-placement': true,
             },
         filter: ['==', 'Club', teamName],
       },
