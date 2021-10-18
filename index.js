@@ -30,11 +30,11 @@ function addImages(team, teamName){
           'icon-size': [
             'step',
             ['zoom'],
-            .04, //Default to this size
+            .1, //Default to this size
             9, //At this zoom decrease to...
-            .06, //This size
+            .08, //This size
             10, //At this zoom decrease to...
-            .07 //This size
+            .09 //This size
           ],
           // 'icon-allow-overlap': true,
           'icon-ignore-placement': true,
