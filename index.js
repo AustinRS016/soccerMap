@@ -9,7 +9,12 @@ var map = new mapboxgl.Map({
 
 });
 
-//** team = "team_Name.png" (Hertha_BSC.png) | teamName = "team Name" (Hertha BSC) **\\
+
+//*********************************************************************************************//
+//            Function to create symbol layer and add icon image for each team- begin          //
+//*********************************************************************************************//
+
+    //** team = "team_Name.png" (Hertha_BSC.png) | teamName = "team Name" (Hertha BSC) **\\
 function addImages(team, teamName){
   map.loadImage('https://raw.githubusercontent.com/AustinRS016/soccerMap/master/signs/' + team, (error, image) => {
     if (error) throw error;
@@ -21,22 +26,12 @@ function addImages(team, teamName){
 
          });
     map.addLayer({
-       id: team, /* Unclustered Points*/
+       id: team,
         type: "symbol",
         source: team,
         layout: {
           'icon-image': teamName,
           'icon-size': .1,
-          // 'icon-size': [
-          //   'step',
-          //   ['zoom'],
-          //   .1, //Default to this size
-          //   9, //At this zoom change to...
-          //   .09, //This size
-          //   10, //At this zoom change to...
-          //   .09 //This size
-          // ],
-          // 'icon-allow-overlap': true,
           'icon-ignore-placement': true,
             },
         filter: ['==', 'Club', teamName],
@@ -46,7 +41,7 @@ function addImages(team, teamName){
 
 
     //******************************************************//
-    //            Clicking and Activating Popups
+    //            Clicking and Activating Popups- begin
     //******************************************************//
     map.on('click', team, (e) => {
         const logo = "<p><img src='signs/" + team + "' alt='"+ teamName + " Logo' style='width:220px;'></p>"
@@ -85,12 +80,17 @@ function addImages(team, teamName){
           map.getCanvas().style.cursor = '';
         });
     //******************************************************//
-
+    //            Clicking and Activating Popups- end
+    //*****************************************************//
     });
   }
+//*********************************************************************************************//
+//            Function to create symbol layer and add icon image for each team- end            //
+//*********************************************************************************************//
 
 map.on('load', function(){
-  // Clustered Points //
+
+// Clustered Points- begin //
   map.addSource("bundesliga",{
            type: "geojson",
            data: "jsons/bundesliga.geojson",
@@ -115,8 +115,7 @@ map.on('load', function(){
               12,
               50
             ]
-      }
-
+          }
       });
   map.addLayer({
          id: "clusterCount",
@@ -133,8 +132,14 @@ map.on('load', function(){
             'text-halo-width': 1,
           },
           filter: ['has','point_count']
-          });
-  // -----------------//
+      });
+// Clustered Points - end //
+
+  //*********************************************************************************************//
+  // Use D3 to get json file (key for clubs)//
+  //     Iterate over each key
+  //     formate variable names
+  //     use addImages function
     d3.json("https://raw.githubusercontent.com/AustinRS016/soccerMap/master/Clubs.json", function(json) {
     var l = json['Club'].length
     var i = 0;
@@ -151,5 +156,3 @@ map.on('load', function(){
 
 
     })
-
-// (logo+team+"<br><br><strong>" + player + "</strong>"+ "<br>" + number + position + "<p>National Team: " + teamnation + "</p>Birth Place: " + birthnation)
