@@ -1,3 +1,4 @@
+
 mapboxgl.accessToken = 'pk.eyJ1IjoiYXVzdGlucnMxNiIsImEiOiJja2hjcjAyYWwwMTIyMnVsNXc3ajUwMmk0In0.b8-Uodu2rXl9TvsX7vatSQ';
 
 
@@ -18,7 +19,6 @@ var map = new mapboxgl.Map({
 function addImages(team, teamName){
   map.loadImage('https://raw.githubusercontent.com/AustinRS016/soccerMap/master/signs/' + team, (error, image) => {
     if (error) throw error;
-    console.log(image)
     map.addImage(teamName, image);
     map.addSource(team,{
              type: "geojson",
@@ -31,7 +31,6 @@ function addImages(team, teamName){
         source: team,
         layout: {
           'icon-image': teamName,
-          'icon-size': .1,
           'icon-ignore-placement': true,
             },
         filter: ['==', 'Club', teamName],
@@ -96,7 +95,8 @@ map.on('load', function(){
            data: "jsons/bundesliga.geojson",
            cluster: true,
            clusterMaxZoom: 7,
-           clusterRadius: 10
+           clusterRadius: 10,
+           buffer: 0,
            });
   map.addLayer({
      id: "cluster",
@@ -145,7 +145,6 @@ map.on('load', function(){
     var i = 0;
     for (i = 0; i < l; i++ ){
         var team = json['Club'][i]
-        console.log(team)
         var teamName = team.replace(/_/g, ' ')
         teamName = teamName.substring(0, teamName.length -4);
         var img = teamName + 'Img'
@@ -153,6 +152,52 @@ map.on('load', function(){
         addImages(team,teamName)
         }
       })
-
-
+    //*************************************//
+    //         End of D3                   //
+    //*************************************//
     })
+
+
+async function forwardGeocoder(query){
+    const matchingFeatures = [];
+    const customData = await getGeojson();
+    for (const feature of customData.features) {
+      if (
+        feature.properties.Player
+          .toLowerCase()
+          .includes(query.toLowerCase())
+      ){
+        feature['place_name'] = feature.properties.Player;
+        feature['center'] = feature.geometry.coordinates;
+        feature['place_type'] = ['place'];
+        matchingFeatures.push(feature);
+      }
+      // console.log(matchingFeatures)
+    }
+  return matchingFeatures;
+}
+
+async function getGeojson()  {
+  const res = await fetch ("https://raw.githubusercontent.com/AustinRS016/soccerMap/master/jsons/bundesliga.geojson");
+  const customData = await res.json();
+  return(customData)
+}
+
+function dummy(){
+}
+
+//*******************************************//
+//    Create localGeocoder Function- end     //
+//*******************************************//
+// Add Geocoder Control to map  //
+  map.addControl(
+    new MapboxGeocoder({
+      accessToken: mapboxgl.accessToken,
+      localGeocoderOnly: true,
+      localGeocoder: dummy,
+      externalGeocoder: forwardGeocoder,
+      zoom: 14,
+      placeholder: 'Search for a Player',
+      mapboxgl: mapboxgl
+    })
+  );
