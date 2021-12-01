@@ -95,7 +95,7 @@ map.on('load', function(){
            data: "jsons/bundesliga.geojson",
            cluster: true,
            clusterMaxZoom: 7,
-           clusterRadius: 10,
+           clusterRadius: 20,
            buffer: 0,
            });
   map.addLayer({
@@ -109,11 +109,11 @@ map.on('load', function(){
             'circle-radius': [
               'step',
               ['get', 'point_count'],
-              30,
-              4,
-              40,
-              12,
-              50
+              50,
+              8,
+              80,
+              15,
+              120
             ]
           }
       });
