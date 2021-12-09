@@ -43,7 +43,7 @@ function addImages(team, teamName){
     //            Clicking and Activating Popups- begin
     //******************************************************//
     map.on('click', team, (e) => {
-        const logo = "<p><img src='signs/" + team + "' alt='"+ teamName + " Logo' style='width:220px;'></p>"
+        const logo = "<p><img src='popupSigns/" + team + "' alt='"+ teamName + " Logo' style='width:220px;'></p>"
         const coordinates = e.features[0].geometry.coordinates.slice();
         // const coordinates = e.features[0].geometry.coordinates[0][0].slice(); // for checking the point alignment
         const club = e.features[0].properties.Club;
@@ -156,7 +156,7 @@ map.on('load', function(){
     //         End of D3                   //
     //*************************************//
     })
-
+// End of map.on 'load' //
 
 async function forwardGeocoder(query){
     const matchingFeatures = [];
@@ -172,7 +172,6 @@ async function forwardGeocoder(query){
         feature['place_type'] = ['place'];
         matchingFeatures.push(feature);
       }
-      // console.log(matchingFeatures)
     }
   return matchingFeatures;
 }
