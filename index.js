@@ -104,7 +104,7 @@ map.on('load', function(){
       source: "bundesliga",
       filter: ['has', 'point_count'],
       paint: {
-        'circle-blur': 1,
+        'circle-blur': 2,
         'circle-color': 'red',
             'circle-radius': [
               'step',
