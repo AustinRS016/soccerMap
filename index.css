@@ -64,5 +64,5 @@ html {
   margin-left: auto;
   margin-right: auto;
   width: 50%;
-  width:165px;
+  max-width: 165px;
 }
