@@ -43,7 +43,7 @@ function addImages(team, teamName){
     //            Clicking and Activating Popups- begin
     //******************************************************//
     map.on('click', team, (e) => {
-        const logo = "<p><img src='popupSigns/" + team + "' alt='"+ teamName + " Logo' style='width:165px;'></p>"
+        const logo = "<p><img src='popupSigns/" + team + "' alt='"+ teamName + " Logo' class='popupSigns'></p>"
         const coordinates = e.features[0].geometry.coordinates.slice();
         // const coordinates = e.features[0].geometry.coordinates[0][0].slice(); // for checking the point alignment
         const club = e.features[0].properties.Club;

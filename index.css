@@ -58,3 +58,11 @@ html {
     padding: 10px 10px 15px;
     pointer-events: auto;
 }
+
+.popupSigns {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  width:165px;
+}
